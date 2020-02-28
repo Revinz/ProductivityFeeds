@@ -49,22 +49,124 @@ function AddSubGallery() {
   Gallery_Body.setAttribute("id", "gallery_body");
   SubGallerySection.appendChild(Gallery_Body);
 
-  var imgurl =
-    "https://yt3.ggpht.com/a/AGF-l7_nKzN_UILeQrGZpqtxpGGCG0E0QPD7Bz8xQw=s88-c-k-c0xffffffff-no-rj-mo";
+  //var subs = GetSubscriptions();
+  /*
+  for (let i = 0; i < subs.length; i++) {
+    console.log(subs[i]);
+    AddSubToGallery(Gallery_Body, subs[i][0], subs[i][1], subs[i][2]);
+  }
+*/
 
-  AddSubToGallery(Gallery_Body, "Test Subscriber", imgurl, true);
-  AddSubToGallery(Gallery_Body, "Test Subscriber 2 ", imgurl, false);
-  AddSubToGallery(Gallery_Body, "Test Subscriber3 ", imgurl, true);
-  AddSubToGallery(Gallery_Body, "Test Subscriber4", imgurl, false);
-  AddSubToGallery(Gallery_Body, "Test Subscriber5", imgurl, true);
-
+  GetSubscriptions(Gallery_Body);
   primaryArea.appendChild(SubGallerySection);
 }
 
-function GetSubscribtions() {}
+function GetSubscriptions(Gallery_Body) {
+  //Check if sidebar is pc-sidebar
+  // else unhide the pc sidebar to be able to fetch subscribers
+  var ytd = document.getElementsByTagName("ytd-app");
+  var miniGuideVisible = false;
+
+  if (ytd[0].hasAttribute("mini-guide-visible_")) {
+    miniGuideVisible = true;
+    var hamburgerBtn = document.querySelectorAll("#guide-button");
+    $("#guide").addClass("notransition");
+    $("#contentContainer").addClass("notransition");
+    $("#guide").addClass("hide");
+    $("#contentContainer").addClass("hide");
+    //console.log(hamburgerBtn[1].children[0]);
+    //$(hamburgerBtn[1].children[0]).attr("aria-pressed", true); //Open menu
+    hamburgerBtn[1].click();
+    console.log("Opened menu");
+  }
+
+  var subs = [];
+
+  //Wait for menu has loaded
+  var exists = setInterval(
+    function() {
+      if (document.querySelectorAll("#expander-item").length > 0) {
+        clearInterval(exists);
+
+        var expanders = document.querySelectorAll("#expander-item");
+        //console.log(expanders);
+        expanders[1].click();
+
+        //Fetch subs
+        var endpoints = document.querySelectorAll("#endpoint");
+
+        // array : title/name, hrefs, newness,
+        var subs = [];
+        for (let i = 0; i < endpoints.length; i++) {
+          if (endpoints[i].href.includes("/channel/")) {
+            //Title
+            var title = endpoints[i].title;
+
+            //We want to skip the 'live' channel
+            if (title == "Live") {
+              continue;
+            }
+
+            //href
+            var img_url = endpoints[i].querySelector("#img").src;
+
+            //newness dot
+            var newness = false;
+            if (
+              $(endpoints[i].querySelector("#newness-dot")).css("display") ==
+              "block"
+            ) {
+              newness = true;
+            }
+
+            subs.push([title, img_url, newness]);
+          }
+        }
+
+        //Collapse sub list again
+        var collapser = expanders[1].parentNode.children[1].children[1].click();
+
+        for (let i = 0; i < subs.length; i++) {
+          //console.log(subs[i]);
+          AddSubToGallery(Gallery_Body, subs[i][0], subs[i][1], subs[i][2]);
+        }
+
+        //Close the burger menu again
+        if (miniGuideVisible) {
+          var hamburgerBtn = document.querySelectorAll("#guide-button");
+          $(hamburgerBtn[1]).trigger("click");
+          //unhide and add transition back
+          console.log("Clicked!");
+
+          //Revert back to normal
+          setTimeout(function() {
+            document
+              .querySelector("#contentContainer")
+              .classList.remove("notransition");
+            document.querySelector("#guide").classList.remove("notransition");
+            document
+              .querySelector("#contentContainer")
+              .classList.remove("hide");
+            document.querySelector("#guide").classList.remove("hide");
+
+            console.log("added transition and visibility again");
+          }, 5);
+        }
+      }
+    },
+    1,
+    [Gallery_Body, miniGuideVisible]
+  ); // check every 10ms
+}
 
 //TODO: Add link to channel
-function AddSubToGallery(gallery_body, _name, sub_img_url, hasUpdate) {
+function AddSubToGallery(
+  gallery_body,
+  _name,
+  sub_img_url,
+  hasUpdate,
+  channel_url
+) {
   //Sub box
   var sub = document.createElement("div");
   sub.setAttribute("class", "sub");
@@ -99,5 +201,3 @@ function AddSubToGallery(gallery_body, _name, sub_img_url, hasUpdate) {
   sub.appendChild(sub_name);
   gallery_body.appendChild(sub);
 }
-
-function FetchSubThumbnails() {}

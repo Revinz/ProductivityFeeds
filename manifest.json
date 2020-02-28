@@ -18,7 +18,8 @@
       "js": [
         "/includes/jquery-3.4.1.min.js",
         "/scripts/main_page_modifier.js",
-        "/scripts/page_navigation_handler.js"
+        "/scripts/page_navigation_handler.js",
+        "/scripts/main_helper_scripts/get_subscriptions.js"
       ]
     }
   ],
