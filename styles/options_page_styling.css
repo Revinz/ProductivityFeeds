@@ -1,0 +1,20 @@
+#popup {
+  height: 350px;
+  width: 250px;
+  margin: 0px;
+  outline: none;
+}
+
+header {
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #333333;
+  color: #ffffff;
+  padding: 3px 10px 3px;
+  font-size: 14px;
+}
+
+#title {
+  margin: 5px;
+}

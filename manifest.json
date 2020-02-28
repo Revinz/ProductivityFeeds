@@ -1,0 +1,34 @@
+{
+  "name": "Youtube Productivity Enhancer",
+  "version": "0.01",
+  "description": "Modifies Youtube to help increasing productivity and removing distracting elements",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Youtube Productivity Enhancer",
+    "default_icon": {}
+  },
+  "icons": {},
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "css": ["/styles/main_page_styles.css"],
+      "run_at": "document_end",
+      "js": [
+        "/includes/jquery-3.4.1.min.js",
+        "/scripts/main_page_modifier.js",
+        "/scripts/page_navigation_handler.js"
+      ]
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "permissions": ["storage", "tabs"],
+
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+}
