@@ -32,7 +32,8 @@
 
 .sub {
   box-sizing: border-box;
-  min-width: 150px;
+  min-width: 100px;
+  text-decoration: none;
 }
 
 .sub .image_container {
@@ -51,6 +52,8 @@
   text-align: center;
   color: white;
   font-size: large;
+  padding-top: 15px;
+  text-decoration: none;
 }
 
 .sub:hover .name {
@@ -81,4 +84,8 @@
 
 .hide {
   visibility: hidden;
+}
+
+.nodim {
+  background: none !important;
 }
