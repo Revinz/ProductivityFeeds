@@ -71,7 +71,6 @@ function IsMiniSidebar() {
   //We can simply check if the ytd-app tag contains the 'mini-guide-visible'
   //since it updates when it changes sidebars
   var ytd = document.getElementsByTagName("ytd-app");
-  var miniGuideVisible = false;
 
   if (ytd[0].hasAttribute("mini-guide-visible_")) {
     return true;

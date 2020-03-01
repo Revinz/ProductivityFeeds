@@ -32,12 +32,6 @@ function HideRecommendedVideos() {
   });
 }
 
-function GetSettings() {
-  chrome.storage.sync.get("settings", function(data) {
-    Settings = data.settings;
-  });
-}
-
 function ModifyHomePage() {
   HideRecommendedVideos();
 
