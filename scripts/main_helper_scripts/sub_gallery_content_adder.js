@@ -149,7 +149,7 @@ function AddSubToGallery(
   }
 
   //Add name
-  var sub_name = document.createElement("h2");
+  var sub_name = document.createElement("p");
   sub_name.setAttribute("class", "name");
   sub_name.innerHTML = _name;
 

@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "css": ["/styles/main_page_styles.css"],
+      "css": ["/styles/palettes.css", "/styles/main_page_styles.css"],
       "run_at": "document_end",
       "js": [
         "/includes/jquery-3.4.1.min.js",

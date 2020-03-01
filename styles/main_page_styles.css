@@ -17,6 +17,8 @@
 #title_subs {
   font-size: xx-large;
   color: white;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 #gallery_body {
@@ -34,6 +36,8 @@
   box-sizing: border-box;
   min-width: 100px;
   text-decoration: none;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .sub .image_container {
