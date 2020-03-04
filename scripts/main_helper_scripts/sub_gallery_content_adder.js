@@ -1,4 +1,8 @@
-//TODO: Find a way to prevent refreshing the page
+//TODO: Find a way to prevent refreshing the page (Low priority)
+
+//TODO: Move the "waiting" functions into other files to make this file cleaner
+//TODO: Make the "waiting" functions more readable
+//TODO: Make the "waiting" functions async and await them instead
 
 /**
  *  Adds the user's subscriptions to the gallery
@@ -20,8 +24,23 @@ function AddUserSubsToGallery(Gallery_Body) {
 
         ExpandSubList();
 
-        var subs = FetchSubs();
+        LoadSubImages(Gallery_Body, miniGuideVisible);
+      }
+    },
+    1,
+    [Gallery_Body, miniGuideVisible]
+  ); // check every 1ms
+}
 
+function LoadSubImages(Gallery_Body, miniGuideVisible) {
+  var endpoints = Array.from(document.querySelectorAll("#endpoint"));
+  var sub_endpoint = endpoints.filter(e => e.href.includes("/channel/"));
+
+  var lastImageExists = setInterval(
+    function() {
+      if (sub_endpoint[sub_endpoint.length - 2].querySelector("#img").src) {
+        clearInterval(lastImageExists);
+        var subs = FetchSubs();
         CollapseSubList();
 
         for (let i = 0; i < subs.length; i++) {
@@ -42,8 +61,8 @@ function AddUserSubsToGallery(Gallery_Body) {
       }
     },
     1,
-    [Gallery_Body, miniGuideVisible]
-  ); // check every 1ms
+    [sub_endpoint]
+  );
 }
 
 /**
