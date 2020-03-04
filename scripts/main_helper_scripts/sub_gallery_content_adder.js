@@ -43,7 +43,6 @@ function LoadSubImages(Gallery_Body, miniGuideVisible) {
         CollapseSubList();
 
         for (let i = 0; i < subs.length; i++) {
-          //console.log(subs[i]);
           AddSubToGallery(
             Gallery_Body,
             subs[i][0],

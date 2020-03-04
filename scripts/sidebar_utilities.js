@@ -7,12 +7,10 @@
  */
 function OpenHiddenFullSidebar() {
   var hamburgerBtn = document.querySelectorAll("#guide-button");
-  console.log(hamburgerBtn);
   RemoveFullSidebarTransitions();
   HideFullSidebar();
   RemoveSidebarDim();
   hamburgerBtn[1].click();
-  console.log("Opened menu");
 }
 
 /**
@@ -21,8 +19,6 @@ function OpenHiddenFullSidebar() {
 function CloseFullSidebar() {
   var hamburgerBtn = document.querySelectorAll("#guide-button");
   $(hamburgerBtn[1]).trigger("click");
-  //unhide and add transition back
-  console.log("Clicked!");
 
   //Revert back to normal
   setTimeout(function() {
@@ -33,7 +29,6 @@ function CloseFullSidebar() {
     document.querySelector("#contentContainer").classList.remove("hide");
     document.querySelector("#guide").classList.remove("hide");
     AddSidebarDim();
-    console.log("added transition and visibility again");
   }, 5);
 }
 
@@ -73,10 +68,8 @@ function IsMiniSidebar() {
 
   // If it does not have the full sidebar, it is either closed or it is tablet or mobile window size (mini sidebar)
   if (!ytd[0].hasAttribute("guide-persistent-and-visible")) {
-    //console.log("Is tablet or mobile");
     return true;
   }
-  //console.log("Is pc");
   return false;
 }
 
