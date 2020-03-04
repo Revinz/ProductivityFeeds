@@ -2,7 +2,7 @@
 
 //TODO: Move the "waiting" functions into other files to make this file cleaner
 //TODO: Make the "waiting" functions more readable
-//TODO: Make the "waiting" functions async and await them instead
+//TODO: Make the "waiting" functions async and await them instead (Use a promise together with an async while loop with a 1000ms timeout?)
 
 /**
  *  Adds the user's subscriptions to the gallery
@@ -23,7 +23,6 @@ function AddUserSubsToGallery(Gallery_Body) {
         clearInterval(exists); //Stop the interval
 
         ExpandSubList();
-
         LoadSubImages(Gallery_Body, miniGuideVisible);
       }
     },
@@ -36,10 +35,15 @@ function LoadSubImages(Gallery_Body, miniGuideVisible) {
   var endpoints = Array.from(document.querySelectorAll("#endpoint"));
   var sub_endpoint = endpoints.filter(e => e.href.includes("/channel/"));
 
+  sub_endpoint.forEach(element => {
+    console.log(element.title);
+    //console.log(element.querySelector("#img").src);
+  });
   var lastImageExists = setInterval(
     function() {
       if (sub_endpoint[sub_endpoint.length - 2].querySelector("#img").src) {
         clearInterval(lastImageExists);
+        console.log("all images loaded");
         var subs = FetchSubs();
         CollapseSubList();
 
@@ -61,7 +65,7 @@ function LoadSubImages(Gallery_Body, miniGuideVisible) {
       }
     },
     1,
-    [sub_endpoint]
+    [sub_endpoint, Gallery_Body, miniGuideVisible]
   );
 }
 
@@ -71,6 +75,7 @@ function LoadSubImages(Gallery_Body, miniGuideVisible) {
 function ExpandSubList() {
   var expanders = document.querySelectorAll("#expander-item");
   expanders[1].click();
+  console.log("Expanded sub list");
 }
 
 /**
@@ -88,6 +93,8 @@ function FetchSubs() {
   var endpoints = document.querySelectorAll("#endpoint");
 
   // array : title/name, hrefs, newness,
+
+  //TODO: Make to dictionary
   var subs = [];
   for (let i = 0; i < endpoints.length; i++) {
     if (endpoints[i].href.includes("/channel/")) {

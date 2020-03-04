@@ -87,7 +87,7 @@
 }
 
 .hide {
-  visibility: hidden;
+  z-index: -1 !important;
 }
 
 .nodim {

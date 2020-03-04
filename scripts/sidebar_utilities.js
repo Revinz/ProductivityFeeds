@@ -7,11 +7,10 @@
  */
 function OpenHiddenFullSidebar() {
   var hamburgerBtn = document.querySelectorAll("#guide-button");
-
+  console.log(hamburgerBtn);
   RemoveFullSidebarTransitions();
   HideFullSidebar();
   RemoveSidebarDim();
-
   hamburgerBtn[1].click();
   console.log("Opened menu");
 }
@@ -72,10 +71,12 @@ function IsMiniSidebar() {
   //since it updates when it changes sidebars
   var ytd = document.getElementsByTagName("ytd-app");
 
-  if (ytd[0].hasAttribute("mini-guide-visible_")) {
+  // If it does not have the full sidebar, it is either closed or it is tablet or mobile window size (mini sidebar)
+  if (!ytd[0].hasAttribute("guide-persistent-and-visible")) {
+    console.log("Is tablet or mobile");
     return true;
   }
-
+  console.log("Is pc");
   return false;
 }
 
