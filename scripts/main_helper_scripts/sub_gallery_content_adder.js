@@ -35,15 +35,10 @@ function LoadSubImages(Gallery_Body, miniGuideVisible) {
   var endpoints = Array.from(document.querySelectorAll("#endpoint"));
   var sub_endpoint = endpoints.filter(e => e.href.includes("/channel/"));
 
-  sub_endpoint.forEach(element => {
-    console.log(element.title);
-    //console.log(element.querySelector("#img").src);
-  });
   var lastImageExists = setInterval(
     function() {
       if (sub_endpoint[sub_endpoint.length - 2].querySelector("#img").src) {
         clearInterval(lastImageExists);
-        console.log("all images loaded");
         var subs = FetchSubs();
         CollapseSubList();
 
@@ -75,7 +70,6 @@ function LoadSubImages(Gallery_Body, miniGuideVisible) {
 function ExpandSubList() {
   var expanders = document.querySelectorAll("#expander-item");
   expanders[1].click();
-  console.log("Expanded sub list");
 }
 
 /**

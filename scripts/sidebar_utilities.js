@@ -73,10 +73,10 @@ function IsMiniSidebar() {
 
   // If it does not have the full sidebar, it is either closed or it is tablet or mobile window size (mini sidebar)
   if (!ytd[0].hasAttribute("guide-persistent-and-visible")) {
-    console.log("Is tablet or mobile");
+    //console.log("Is tablet or mobile");
     return true;
   }
-  console.log("Is pc");
+  //console.log("Is pc");
   return false;
 }
 
