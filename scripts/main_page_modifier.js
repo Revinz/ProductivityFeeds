@@ -39,7 +39,7 @@ function ModifyHomePage() {
 }
 
 //Adds the sub gallery to the page and populates it
-function AddSubGallery() {
+async function AddSubGallery() {
   var SubGallerySection = document.createElement("div");
   SubGallerySection.setAttribute("id", "sub_gallery");
 
@@ -57,7 +57,15 @@ function AddSubGallery() {
   Gallery_Body.setAttribute("id", "gallery_body");
   SubGallerySection.appendChild(Gallery_Body);
 
-  AddUserSubsToGallery(Gallery_Body);
+  //Wait for all subs have been added to the gallery
+  //TODO: Set a timeout to ~1s or something, to prevent infinitely trying add the sub gallery
+  // The timeout can be implemented by racing 2 promises (a setTimeout vs the wanted functionality)
+  // https://italonascimento.github.io/applying-a-timeout-to-your-promises/
 
+  let r = await MakeSubGallery(Gallery_Body).catch(error => {
+    alert(error);
+  });
+
+  //Then add the gallery to the page
   primaryArea.appendChild(SubGallerySection);
 }

@@ -13,6 +13,18 @@ function OpenHiddenFullSidebar() {
   hamburgerBtn[1].click();
 }
 
+async function WaitForFullSidebarOpen() {
+  return new Promise(resolve => {
+    //Wait for menu has loaded
+    var exists = setInterval(function() {
+      if (IsFullSidebarOpen()) {
+        clearInterval(exists); //Stop the interval
+        resolve("Fullsidebar opened");
+      }
+    }, 1); // check every 1ms
+  });
+}
+
 /**
  * Closes the full size sidebar
  */
@@ -78,4 +90,32 @@ function IsFullSidebarOpen() {
     return true;
   }
   return false;
+}
+
+async function WaitForSubListExpanded() {
+  return new Promise(resolve => {
+    var lastImageExists = setInterval(function() {
+      if (IsSubListExpanded()) {
+        clearInterval(lastImageExists);
+        resolve("Sub List Expanded");
+      }
+    }, 1);
+  });
+}
+
+function IsSubListExpanded() {
+  var endpoints = Array.from(document.querySelectorAll("#endpoint"));
+  var sub_endpoint = endpoints.filter(e => e.href.includes("/channel/"));
+  if (sub_endpoint[sub_endpoint.length - 2].querySelector("#img").src) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//Gets sub end points incl. the live channel
+function GetSubEndpoints() {
+  var endpoints = Array.from(document.querySelectorAll("#endpoint"));
+  var sub_endpoints = endpoints.filter(e => e.href.includes("/channel/"));
+  return sub_endpoints;
 }

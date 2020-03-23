@@ -1,78 +1,36 @@
 //TODO: Find a way to prevent refreshing the page (Low priority)
 
-//TODO: Move the "waiting" functions into other files to make this file cleaner
-//TODO: Make the "waiting" functions more readable
-//TODO: Make the "waiting" functions async and await them instead (Use a promise together with an async while loop with a 1000ms timeout?)
+//TODO: Make the "waiting" functions async and await them instead
 
-/**
- *  Adds the user's subscriptions to the gallery
- * @param {*} Gallery_Body
- */
-function AddUserSubsToGallery(Gallery_Body) {
-  var miniGuideVisible = false;
-
-  if (IsMiniSidebar()) {
-    miniGuideVisible = true;
-    OpenHiddenFullSidebar();
+//Adds all subs to the sub gallery
+function AddAllSubsToGal(subs, Gallery_Body) {
+  for (let i = 0; i < subs.length; i++) {
+    AddSubToGallery(
+      Gallery_Body,
+      subs[i][0],
+      subs[i][1],
+      subs[i][2],
+      subs[i][3]
+    );
   }
-
-  //Wait for menu has loaded
-  var exists = setInterval(
-    function() {
-      if (IsFullSidebarOpen()) {
-        clearInterval(exists); //Stop the interval
-
-        ExpandSubList();
-        LoadSubImages(Gallery_Body, miniGuideVisible);
-      }
-    },
-    1,
-    [Gallery_Body, miniGuideVisible]
-  ); // check every 1ms
 }
 
-function LoadSubImages(Gallery_Body, miniGuideVisible) {
-  var endpoints = Array.from(document.querySelectorAll("#endpoint"));
-  var sub_endpoint = endpoints.filter(e => e.href.includes("/channel/"));
-
-  var lastImageExists = setInterval(
-    function() {
-      if (sub_endpoint[sub_endpoint.length - 2].querySelector("#img").src) {
-        clearInterval(lastImageExists);
-        var subs = FetchSubs();
-        CollapseSubList();
-
-        for (let i = 0; i < subs.length; i++) {
-          AddSubToGallery(
-            Gallery_Body,
-            subs[i][0],
-            subs[i][1],
-            subs[i][2],
-            subs[i][3]
-          );
-        }
-
-        //Close the full size sidebar again
-        if (miniGuideVisible) {
-          CloseFullSidebar();
-        }
-      }
-    },
-    1,
-    [sub_endpoint, Gallery_Body, miniGuideVisible]
-  );
-}
-
+//TODO: Move into new file sub_list_utility
 /**
  * Expand sub list
+ * Requires the sidebar to be open
+ * TODO: Add exception for sidebar not open
  */
 function ExpandSubList() {
   var expanders = document.querySelectorAll("#expander-item");
   expanders[1].click();
 }
 
+//TODO: Move into new file sub_list_utility
 /**
  * Collapse the sub list
+ * Requires the sidebar to be open
+ * TODO: Add exception for sidebar not open
  */
 function CollapseSubList() {
   var expanders = document.querySelectorAll("#expander-item");
@@ -81,35 +39,32 @@ function CollapseSubList() {
 
 /**
  * Fetches the subscriptions' info
+ * title, url, href, newness
  */
-function FetchSubs() {
-  var endpoints = document.querySelectorAll("#endpoint");
-
+function FetchSubsInfo() {
   // array : title/name, hrefs, newness,
 
   //TODO: Make to dictionary
   var subs = [];
-  for (let i = 0; i < endpoints.length; i++) {
-    if (endpoints[i].href.includes("/channel/")) {
-      //Determine if sub
-      //Title
-      var title = endpoints[i].title;
+  let sub_endpoint = GetSubEndpoints();
+  for (let i = 0; i < sub_endpoint.length; i++) {
+    //Title
+    var title = sub_endpoint[i].title;
 
-      //We want to skip the 'live' channel
-      if (title == "Live") {
-        continue;
-      }
-
-      //img href
-      var img_url = endpoints[i].querySelector("#img").src;
-      //channel href
-      var channel_href = endpoints[i].href;
-
-      //newness dot
-      var newness = hasNewnessVisible(endpoints[i]);
-
-      subs.push([title, img_url, newness, channel_href]);
+    //We want to skip the 'live' channel
+    if (title == "Live") {
+      continue;
     }
+
+    //img href
+    var img_url = sub_endpoint[i].querySelector("#img").src;
+    //channel href
+    var channel_href = sub_endpoint[i].href;
+
+    //newness dot
+    var newness = hasNewnessVisible(sub_endpoint[i]);
+
+    subs.push([title, img_url, newness, channel_href]);
   }
 
   return subs;
