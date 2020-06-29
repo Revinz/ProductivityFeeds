@@ -1,0 +1,33 @@
+{
+  "name": "youtube-feed",
+  "version": "0.0.5",
+  "description": "Youtube Feed focused on productivity while keeping you updated on what you believe is important for you!",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "node ./scripts/prebuild.js",
+    "build": "tsc",
+    "postbuild": "node ./scripts/postbuild.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Revinz/YoutubeExtension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Revinz/YoutubeExtension/issues"
+  },
+  "homepage": "https://github.com/Revinz/YoutubeExtension#readme",
+  "dependencies": {
+    "ncp": "^2.0.0",
+    "rimraf": "^3.0.2",
+    "rsync": "^0.6.1"
+  }
+}

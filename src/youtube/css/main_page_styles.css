@@ -1,0 +1,95 @@
+.test {
+  background-color: black;
+}
+
+#sub_gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+#gallery_header {
+  margin-top: 50px;
+  display: block;
+  margin-left: 50px;
+  margin-bottom: 35px;
+}
+
+#title_subs {
+  font-size: xx-large;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+#gallery_body {
+  padding-top: 10px;
+  padding-bottom: 3%;
+  position: relative;
+  display: grid;
+  grid-gap: 100px;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  margin-left: 100px;
+  padding-right: 100px;
+}
+
+.sub {
+  box-sizing: border-box;
+  min-width: 100px;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sub .image_container {
+  display: block;
+}
+
+.sub .image {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+
+  border-radius: 50%;
+}
+
+.sub .name {
+  text-align: center;
+  color: white;
+  font-size: large;
+  padding-top: 15px;
+  text-decoration: none;
+}
+
+.sub:hover .name {
+  color: crimson;
+}
+
+.sub .image_container .new_dot {
+  position: relative;
+  display: block;
+  left: calc(50% + 55px);
+  box-shadow: 0px 0px 0px 1px crimson;
+  border-color: crimson;
+  background-color: crimson;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px;
+}
+
+.sub .border {
+  box-shadow: 0px 0px 0px 5px crimson;
+  background-color: crimson;
+}
+
+.notransition {
+  transition: none !important;
+}
+
+.hide {
+  z-index: -1 !important;
+}
+
+.nodim {
+  background: none !important;
+}

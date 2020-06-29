@@ -27,7 +27,7 @@ function HideRecommendedVideos() {
     }
   }
 
-  primaryArea.childNodes.forEach(e => {
+  primaryArea.childNodes.forEach((e) => {
     e.remove();
   });
 }
@@ -62,7 +62,7 @@ async function AddSubGallery() {
   // The timeout can be implemented by racing 2 promises (a setTimeout vs the wanted functionality)
   // https://italonascimento.github.io/applying-a-timeout-to-your-promises/
 
-  let r = await MakeSubGallery(Gallery_Body).catch(error => {
+  let r = await MakeSubGallery(Gallery_Body).catch((error) => {
     alert(error);
   });
 
