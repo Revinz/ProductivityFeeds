@@ -7,13 +7,22 @@
  */
 function OpenHiddenFullSidebar() {
   var hamburgerBtn = document.querySelectorAll("#guide-button");
-
   RemoveFullSidebarTransitions();
   HideFullSidebar();
   RemoveSidebarDim();
-
   hamburgerBtn[1].click();
-  console.log("Opened menu");
+}
+
+async function WaitForFullSidebarOpen() {
+  return new Promise(resolve => {
+    //Wait for menu has loaded
+    var exists = setInterval(function() {
+      if (IsFullSidebarOpen()) {
+        clearInterval(exists); //Stop the interval
+        resolve("Fullsidebar opened");
+      }
+    }, 1); // check every 1ms
+  });
 }
 
 /**
@@ -22,8 +31,6 @@ function OpenHiddenFullSidebar() {
 function CloseFullSidebar() {
   var hamburgerBtn = document.querySelectorAll("#guide-button");
   $(hamburgerBtn[1]).trigger("click");
-  //unhide and add transition back
-  console.log("Clicked!");
 
   //Revert back to normal
   setTimeout(function() {
@@ -34,7 +41,6 @@ function CloseFullSidebar() {
     document.querySelector("#contentContainer").classList.remove("hide");
     document.querySelector("#guide").classList.remove("hide");
     AddSidebarDim();
-    console.log("added transition and visibility again");
   }, 5);
 }
 
@@ -72,10 +78,10 @@ function IsMiniSidebar() {
   //since it updates when it changes sidebars
   var ytd = document.getElementsByTagName("ytd-app");
 
-  if (ytd[0].hasAttribute("mini-guide-visible_")) {
+  // If it does not have the full sidebar, it is either closed or it is tablet or mobile window size (mini sidebar)
+  if (!ytd[0].hasAttribute("guide-persistent-and-visible")) {
     return true;
   }
-
   return false;
 }
 
@@ -84,4 +90,32 @@ function IsFullSidebarOpen() {
     return true;
   }
   return false;
+}
+
+async function WaitForSubListExpanded() {
+  return new Promise(resolve => {
+    var lastImageExists = setInterval(function() {
+      if (IsSubListExpanded()) {
+        clearInterval(lastImageExists);
+        resolve("Sub List Expanded");
+      }
+    }, 1);
+  });
+}
+
+function IsSubListExpanded() {
+  var endpoints = Array.from(document.querySelectorAll("#endpoint"));
+  var sub_endpoint = endpoints.filter(e => e.href.includes("/channel/"));
+  if (sub_endpoint[sub_endpoint.length - 2].querySelector("#img").src) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//Gets sub end points incl. the live channel
+function GetSubEndpoints() {
+  var endpoints = Array.from(document.querySelectorAll("#endpoint"));
+  var sub_endpoints = endpoints.filter(e => e.href.includes("/channel/"));
+  return sub_endpoints;
 }
