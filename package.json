@@ -28,6 +28,7 @@
   },
   "scripts": {
     "test": "karma start",
+    "test-build": "npm run test && npm run build",
     "prebuild": "node ./scripts/prebuild.js",
     "build": "tsc",
     "postbuild": "node ./scripts/postbuild.js"

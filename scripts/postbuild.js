@@ -17,6 +17,24 @@ ncp(
     if (err) {
       return console.error(err);
     }
-    console.log("done!");
   })
 );
+
+ncp("./manifest.json", "./dist/manifest.json", (err) => {
+  if (err) {
+    return console.error(err);
+  }
+});
+
+ncp(
+  "./includes",
+  "./dist/includes",
+  ({ filter: /^(?!.*(tsx|ts)).*$/ },
+  (err) => {
+    if (err) {
+      return console.error(err);
+    }
+  })
+);
+
+console.log("done!");
